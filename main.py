@@ -8,9 +8,7 @@ import os
 def download_model():
     url = 'https://drive.google.com/uc?id=1UnvkEgnUKv2arImj6E72dkuevqp-NR86'  # Replace with your file ID
     output = 'trained_plant_disease_model.keras'
-    if not os.path.exists(output) or os.path.isdir(output):
-        if os.path.isdir(output):
-            os.rmdir(output)  # Remove the directory if it exists
+    if not os.path.exists(output):
         gdown.download(url, output, quiet=False)
 
 def model_prediction(test_image):

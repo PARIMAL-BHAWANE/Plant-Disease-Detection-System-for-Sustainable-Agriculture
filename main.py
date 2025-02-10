@@ -43,8 +43,9 @@ def model_prediction(test_image):
 if "app_mode" not in st.session_state:
     st.session_state.app_mode = "HOME"
 
-# 🏠 Home and Recognition Buttons
-col1, col2 = st.columns([1, 1])
+# 🏠 Home and Disease Recognition Buttons
+st.markdown("<h1 style='text-align: center;'>🌱 Plant Disease Detection System</h1>", unsafe_allow_html=True)
+col1, col2 = st.columns(2)
 with col1:
     if st.button("🏠 HOME"):
         st.session_state.app_mode = "HOME"
@@ -54,11 +55,11 @@ with col2:
 
 # 🌿 Load and Display Main Image
 img = Image.open("Diseases.png")
-st.image(img)
+st.image(img, use_container_width=True)
 
 # 🏠 Home Page
 if st.session_state.app_mode == "HOME":
-    st.markdown("<h1 style='text-align: center;'>🌱 Plant Disease Detection System for Sustainable Agriculture</h1>", unsafe_allow_html=True)
+    st.markdown("<h2 style='text-align: center;'>Welcome to the Plant Disease Detection System!</h2>", unsafe_allow_html=True)
 
 # 🔍 Disease Recognition Page
 elif st.session_state.app_mode == "DISEASE RECOGNITION":
@@ -93,3 +94,22 @@ elif st.session_state.app_mode == "DISEASE RECOGNITION":
 
             # 🎯 Display Prediction Result
             st.success(f"✅ Model predicts: **{class_name[result_index]}**")
+
+
+# 🌍 Add extra spacing to push the footer down
+st.markdown("<br>", unsafe_allow_html=True)
+
+# 📌 Centered GitHub Profile Section (Now at the Bottom Without Overlap)
+st.markdown(
+    """
+    <div style="text-align: center;">
+        <h3>📌 Connect with Me</h3>
+        <img src="https://avatars.githubusercontent.com/PARIMAL-BHAWANE" width="100" style="border-radius: 50%;">
+        <br><br>
+        <a href="https://github.com/PARIMAL-BHAWANE" target="_blank">
+            <img src="https://img.shields.io/badge/GitHub-%23181717.svg?style=for-the-badge&logo=github&logoColor=white">
+        </a>
+    </div>
+    """,
+    unsafe_allow_html=True
+)

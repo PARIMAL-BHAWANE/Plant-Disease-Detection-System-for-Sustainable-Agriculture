@@ -29,15 +29,30 @@ def download_model():
     if not os.path.exists(output):
         gdown.download(url, output, quiet=False)
 
-# 🧠 Model Prediction Function
 def model_prediction(test_image):
-    download_model()
-    model = tf.keras.models.load_model("trained_plant_disease_model.keras")
+    download_model()  # Ensure the model is downloaded
+
+    model_path = "trained_plant_disease_model.keras"
+    
+    # Check if the model file exists
+    if not os.path.exists(model_path):
+        st.error("🚨 Model file not found! Please check the download.")
+        return None
+
+    try:
+        model = tf.keras.models.load_model(model_path)
+    except ValueError as e:
+        st.error(f"🚨 Error loading model: {e}")
+        return None
+
+    # Preprocess the image
     image = tf.keras.preprocessing.image.load_img(test_image, target_size=(128, 128))
     input_arr = tf.keras.preprocessing.image.img_to_array(image)
     input_arr = np.array([input_arr])  # Convert single image to batch
     predictions = model.predict(input_arr)
-    return np.argmax(predictions)
+
+    return np.argmax(predictions)  # Return the predicted class index
+
 
 # 🌍 Initialize session state for navigation
 if "app_mode" not in st.session_state:

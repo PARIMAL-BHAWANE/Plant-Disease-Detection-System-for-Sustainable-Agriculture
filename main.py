@@ -21,29 +21,27 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
-
-# 📥 Model Download Function
 def download_model():
-    url = 'https://drive.google.com/file/d/1UnvkEgnUKv2arImj6E72dkuevqp-NR86'  # Replace with your file ID
-    output = 'trained_plant_disease_model.keras'
-    if not os.path.exists(output):
-        gdown.download(url, output, quiet=False)
+    url = "https://drive.google.com/uc?id=1UnvkEgnUKv2arImj6E72dkuevqp-NR86"
+    output = "trained_plant_disease_model.keras"
 
-def model_prediction(test_image):
-    download_model()  # Ensure the model is downloaded
-
-    model_path = "trained_plant_disease_model.keras"
-    
-    # Check if the model file exists
-    if not os.path.exists(model_path):
-        st.error("🚨 Model file not found! Please check the download.")
-        return None
+    # If model already exists, no need to download
+    if os.path.exists(output) and os.path.getsize(output) > 0:
+        st.success("✅ Model file already exists.")
+        return
 
     try:
-        model = tf.keras.models.load_model(model_path)
-    except ValueError as e:
-        st.error(f"🚨 Error loading model: {e}")
-        return None
+        st.info("📥 Downloading model... Please wait.")
+        gdown.download(url, output, quiet=False)
+
+        # Validate the downloaded file
+        if not os.path.exists(output) or os.path.getsize(output) == 0:
+            st.error("🚨 Model download failed! Please check the link and permissions.")
+            return
+        st.success("✅ Model downloaded successfully!")
+    
+    except Exception as e:
+        st.error(f"🚨 Error downloading model: {e}")
 
     # Preprocess the image
     image = tf.keras.preprocessing.image.load_img(test_image, target_size=(128, 128))

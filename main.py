@@ -44,7 +44,7 @@ if "app_mode" not in st.session_state:
     st.session_state.app_mode = "HOME"
 
 # 🏠 Home and Disease Recognition Buttons
-st.markdown("<h1 style='text-align: center;'>🌱 Plant Disease Detection System</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center;'>🌱 Plant Disease Detection System for Sustainable Agriculture</h1>", unsafe_allow_html=True)
 col1, col2 = st.columns(2)
 with col1:
     if st.button("🏠 HOME"):
@@ -94,7 +94,6 @@ elif st.session_state.app_mode == "DISEASE RECOGNITION":
 
             # 🎯 Display Prediction Result
             st.success(f"✅ Model predicts: **{class_name[result_index]}**")
-
 
 # 🌍 Add extra spacing to push the footer down
 st.markdown("<br>", unsafe_allow_html=True)
